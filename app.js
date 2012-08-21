@@ -132,7 +132,7 @@ var template = twig({
 app.get('/', function(req, res){
   var data = { 'site_root': '/', 'cur_user': {'right': 'ADMIN', 'login': 'jeanPo', 'nomutilisateur': 'Polate', 'prenomutilisateur': 'Jean'}};
  return res.send(twig({ref: "home"}).render(data));
-};
+});
 // Launch server
 
 app.listen(8080);
