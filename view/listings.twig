@@ -1,0 +1,36 @@
+{% set cur_page = 'listings' %}
+{% extends 'body.twig' %}
+{% block content %}
+{% if cur_user.right == 'GESTIONNAIRE' or cur_user.right == "ADMIN" %}
+<div class="span3 offset1">
+<a href="#" class="btn btn-inverse"><i class="icon-print icon-white"></i> Imprimer</a><br /><br />
+</div>
+{% for event in session %}
+<div class="row">
+  <div class="span9 offset1 well">
+  <h1>{{ event.info.nomsession }} / {{ event.info.nomevenement }}</h1>
+  <h3>du {{ event.info.datedebutevenement }} au {{ event.info.datefinevenement }}</h3>
+  <br />
+   <table class="table table-condensed table-bordered">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Prenom</th>
+        <th>Présence ?</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in event.listUser %}
+      <tr>
+        <td>{{ user.nomutilisateur }}</td>
+        <td>{{ user.prenomutilisateur }}</td>
+        <td></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock %}
