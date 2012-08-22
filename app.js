@@ -73,6 +73,9 @@ app.post('/api/events', function(req, res){
 app.get('/api/events/:id', function (req, res){
   return eventModel.findById(req.params.id, function (err, event){
     if(!err){
+      var Reponse = { 'code': 1,
+                      'event': event;
+                    };
       return res.send(event);
     }
     else{
