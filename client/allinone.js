@@ -4,7 +4,8 @@
 var application_root = __dirname,
     express = require("express"),
     path = require("path"),
-    mongoose = require('mongoose'); 
+    mongoose = require('mongoose'),
+    twig = require("twig");
 
 var app = express.createServer();
 
@@ -15,13 +16,19 @@ mongoose.connect('mongodb://localhost/ecomm_database');
 // Config
 
 app.configure(function () {
+  app.set('view engine', 'twig');
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(application_root, "public")));
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 
+  app.set("twig options", { 
+    strict_variables: false
+  });
 });
+
+app.register('twig', twig);
 
 /* API */
 var Schema = mongoose.Schema;
@@ -112,6 +119,19 @@ app.delete('/api/events/:id', function (req, res) {
       }
     });
   });
+});
+
+/* Vu */
+
+var template = twig({
+  id: "home",
+  href: "view/home.twig",
+  async: false,
+});
+
+app.get('/', function(req, res){
+  var data = { 'site_root': '/', 'cur_user': {'right': 'ADMIN', 'login': 'jeanPo', 'nomutilisateur': 'Polate', 'prenomutilisateur': 'Jean'}};
+ return res.send(twig({ref: "home"}).render(data));
 });
 // Launch server
 
