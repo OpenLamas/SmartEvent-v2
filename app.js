@@ -76,6 +76,7 @@ app.get('/api/events/:id', function (req, res){
       return res.send(event);
     }
     else{
+      res.send("No way man", 404);
       return console.log(err);
     }
   });
