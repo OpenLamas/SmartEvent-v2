@@ -74,14 +74,7 @@ app.post('/api/events', function(req, res){
 app.get('/api/events/:id', function (req, res){
   return eventModel.findById(req.params.id, function (err, event){
     if(!err){
-<<<<<<< HEAD
       return res.send(event);
-=======
-      var reponse = { 'code': 1,
-                      'event': event
-                    };
-      return res.send(reponse);
->>>>>>> db744f30b7813b4d89ce2f28d1cc1172f8b760c0
     }
     else{
       res.send("No way man", 404);
