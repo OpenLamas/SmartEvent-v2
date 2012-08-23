@@ -62,13 +62,15 @@ app.post('/api/events', function(req, res){
   });
   event.save(function (err) {
     if(!err){
-      return console.log("created");
+      console.log("created");
+      return res.send(event);
     }
     else{
-      return console.log(err);
+      console.log(err);
+      return res.send("You're WONG !", 400);
     }
   });
-  return res.send(event);
+  
 });
 
 app.get('/api/events/:id', function (req, res){
