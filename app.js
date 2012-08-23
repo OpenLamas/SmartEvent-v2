@@ -43,6 +43,7 @@ app.get('/api/events', function (req, res) {
     }
 
     else{
+      res.send("Youpss", 500);
       return console.log(err);
     }
   });
@@ -73,9 +74,6 @@ app.post('/api/events', function(req, res){
 app.get('/api/events/:id', function (req, res){
   return eventModel.findById(req.params.id, function (err, event){
     if(!err){
-      var Reponse = { 'code': 1,
-                      'event': event;
-                    };
       return res.send(event);
     }
     else{
@@ -112,6 +110,7 @@ app.delete('/api/events/:id', function (req, res) {
         return res.send('');
       }
       else{
+        console('No way man', 404);
         console.log(err);
       }
     });
