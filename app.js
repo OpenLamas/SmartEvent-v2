@@ -120,4 +120,4 @@ app.delete('/api/events/:id', function (req, res) {
 });
 // Launch server
 
-app.listen(8080);
+app.listen(80);

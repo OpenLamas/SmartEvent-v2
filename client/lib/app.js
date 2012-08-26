@@ -51,7 +51,7 @@
 
       Events.prototype.model = Event;
 
-      Events.prototype.url = "http://178.170.117.159:8080/api/events/";
+      Events.prototype.url = "/api/events/";
 
       Events.prototype.initialize = function() {
         return console.log("Nouvelle Collection");

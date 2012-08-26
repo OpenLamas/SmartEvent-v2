@@ -22,8 +22,8 @@ jQuery ->
 
   class window.Events extends Backbone.Collection
     model: Event
-
-    url: "http://178.170.117.159:8080/api/events/"
+ 
+    url: "/api/events/"
 
     initialize: ->
       console.log "Nouvelle Collection"
