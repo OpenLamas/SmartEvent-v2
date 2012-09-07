@@ -1,123 +1,75 @@
 /**
- * Module dependencies
- */
-var application_root = __dirname,
-    express = require("express"),
-    path = require("path"),
-    mongoose = require('mongoose'); 
+*  Module
+*/
+var express = require('express'),
+    application_root = __dirname,
+    redis = require('redis');
 
-var app = express.createServer();
+var app = express.createServer(),
+    clientRed = redis.createClient();
 
-// Database
-
-mongoose.connect('mongodb://localhost/ecomm_database');
-
-// Config
+clientRed.on("error", function (err){
+  console.log("Error : " + err);
+});
 
 app.configure(function () {
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
-  app.use(express.static(path.join(application_root, "client")));
+  app.use(express.static(application_root + '/client'));
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-
 });
 
-/* API */
-var Schema = mongoose.Schema;
-
-var Event = new Schema({
-  nom: { type: String, required: true},
-  description: { type: String, required: true},
-  dateDebut: { type: Date, required: true},
-  dateFin: { type: Date, required: true},
-  emplacement: { type: String, required: true}
-});
-
-var eventModel = mongoose.model('Event', Event);
-
-app.get('/api/events', function (req, res) {
-  return eventModel.find(function (err, events) {
+app.get("/api/event/:id", function(req, res){
+  clientRed.hgetall(req.params.id, function (err, reply){
     if(!err){
-      return res.send(events);
-    }
-
-    else{
-      res.send("Youpss", 500);
-      return console.log(err);
-    }
-  });
-});
-
-app.post('/api/events', function(req, res){
-  var event;
-  console.log("POST: ");
-  console.log(req.body);
-  event = new eventModel({
-    nom: req.body.nom,
-    description: req.body.description,
-    dateDebut: req.body.dateDebut,
-    dateFin: req.body.dateFin,
-    emplacement: req.body.emplacement
-  });
-  event.save(function (err) {
-    if(!err){
-      console.log("created");
-      return res.send(event);
+      console.log("Event "+req.params.id+" requested");
+      res.send(reply);
     }
     else{
-      console.log(err);
-      return res.send("You're WONG !", 400);
+      console.log("Error : "+ err);
+      res.send(500);
     }
   });
-  
 });
 
-app.get('/api/events/:id', function (req, res){
-  return eventModel.findById(req.params.id, function (err, event){
+app.put("/api/event/:id", function(req, res){
+  clientRed.HMset("event:"+req.params.id, req.body, redis.print);
+  res.send(200);
+});
+
+app.delete("/api/event/:id", function (req, res){
+  clientRed.del("event:"+req.params.id, redis.print)
+})
+
+app.post("/api/events", function(req, res){
+  clientRed.get("events:nextId", function (err, id){ // On récup l'id de notre nouvel event
+  if(!err){
+    console.log("New event ! id:"+id); 
+    clientRed.incr("events:nextId", redis.print); // On incrémante pour le suivant
+    clientRed.HMset("event:"+id, req.body, redis.print);
+    res.send('{ id : '+id+'}');
+  }
+  else{
+    console.log("Error : "+ err);
+    res.send(500);
+  }
+});
+
+app.get('/api/events', function (req, res){
+  clientRed.get("events:nextId", function (err, id){
     if(!err){
-      return res.send(event);
+      console.log("Reply :"+ id);
+      res.send('id : ' + id);
     }
     else{
-      res.send("No way man", 404);
-      return console.log(err);
+      console.log("Error : "+ id);
+      res.send(500);
     }
   });
 });
 
-app.put('/api/events/:id', function (req, res){
-  return eventModel.findById(req.params.id, function (err, event){
-    event.nom = req.body.nom;
-    event.description =  req.body.description;
-    event.dateDebut = req.body.dateDebut;
-    event.dateFin = req.body.dateFin;
-    event.emplacement = req.body.emplacement;
-    return event.save(function (err){
-      if(!err){
-        console.log("Updated");
-      }
-      else{
-        console.log(err);
-      }
-      return res.send(event);
-    });
-  });
+var port = 5000;
+app.listen(port, function() {
+  console.log("Listening on " + port);
 });
-
-app.delete('/api/events/:id', function (req, res) {
-  return eventModel.findById(req.param.id, function (err, event){
-    return event.remove(function (err) {
-      if(!err){
-        console.log("removed");
-        return res.send('');
-      }
-      else{
-        console('No way man', 404);
-        console.log(err);
-      }
-    });
-  });
-});
-// Launch server
-
-app.listen(80);
