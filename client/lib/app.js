@@ -3,9 +3,9 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  JQuery(function() {
-    var Event, Session, SessionRouteur, SessionView, router;
-    Event = (function(_super) {
+  jQuery(function() {
+    var router;
+    window.Event = (function(_super) {
 
       __extends(Event, _super);
 
@@ -21,7 +21,7 @@
       return Event;
 
     })(Backbone.Model);
-    Session = (function(_super) {
+    window.Session = (function(_super) {
 
       __extends(Session, _super);
 
@@ -40,7 +40,7 @@
       return Session;
 
     })(Backbone.Collection);
-    SessionView = (function(_super) {
+    window.SessionView = (function(_super) {
 
       __extends(SessionView, _super);
 
@@ -48,17 +48,24 @@
         return SessionView.__super__.constructor.apply(this, arguments);
       }
 
-      SessionView.prototype.el = $('#session');
+      SessionView.prototype.el = $('#session-cont');
 
       SessionView.prototype.initialize = function() {
+        console.log("Vu instancier !");
         this.template = _.template($("#template-events").html());
         _.bindAll(this, 'render');
-        return this.model.bind('change', render);
+        this.collection.bind('change', this.render);
+        this.collection.bind('add', this.render);
+        this.collection.bind('remove', this.render);
+        return this.collection.bind('reset', this.render);
       };
 
       SessionView.prototype.render = function() {
         var renderedCont;
-        renderedCont = this.template(this.model.toJSON());
+        console.log("Vu rendu");
+        renderedCont = this.template({
+          events: this.collection.toJSON()
+        });
         $(this.el).html(renderedCont);
         return this;
       };
@@ -66,29 +73,27 @@
       return SessionView;
 
     })(Backbone.View);
-    SessionRouteur = (function(_super) {
+    window.SessionRouter = (function(_super) {
 
-      __extends(SessionRouteur, _super);
+      __extends(SessionRouter, _super);
 
-      function SessionRouteur() {
-        return SessionRouteur.__super__.constructor.apply(this, arguments);
+      function SessionRouter() {
+        return SessionRouter.__super__.constructor.apply(this, arguments);
       }
 
-      SessionRouteur.prototype.initialize = function() {
-        var session;
-        session = new Session();
+      SessionRouter.prototype.initialize = function() {
+        this.session = new Session();
         this.session.fetch();
         this.sessionView = new SessionView({
-          collection: session
+          collection: this.session
         });
         return this.sessionView.render();
       };
 
-      return SessionRouteur;
+      return SessionRouter;
 
     })(Backbone.Router);
-    router = new SessionRouter();
-    return Backbone.history.start();
+    return router = new SessionRouter();
   });
 
 }).call(this);
