@@ -1,29 +1,36 @@
-jQuery ->
-  
-  class window.Event extends Backbone.Model
-    defaults:
-      _id: "000000000000000000000001"
-      dateDebut: "2012-02-10T08:00:00.000Z"
-      dateFin: "2012-02-10T08:44:23.372Z"
-      description: "Defaults"
-      emplacement: "No where"
-      nom: "Name"
-
+JQuery ->
+  class Event extends Backbone.Model
     initialize: ->
-      console.log 'Event Contructor'
-      @.bind "error", (model, error)->
-        console.log "Erreur ! : #{error}"
+      @url = "/api/event/#{@id}"
+      console.log "Nouvel event !"
 
-    getId: ->
-      @.get 'id'
-
-    validate: (attributes) ->
-      "Le nom n'est pas valide" if attributes.name is ''
-
-  class window.Events extends Backbone.Collection
+  class Session extends Backbone.Collection
     model: Event
- 
-    url: "/api/events/"
+    url: "/api/events"
 
     initialize: ->
-      console.log "Nouvelle Collection"
+      console.log "Nouvelle session !"
+
+  class SessionView extends Backbone.View
+    el: $ '#session'
+    initialize: ->
+      @template = _.template $("#template-events").html()
+      _.bindAll @, 'render'
+      @model.bind 'change', render
+
+    render: ->
+      renderedCont = @template @model.toJSON()
+      $(@el).html renderedCont;
+      @
+
+  class SessionRouteur extends Backbone.Router
+    initialize: ->
+      session = new Session()
+      @session.fetch()
+
+      @sessionView = new SessionView collection: session
+      @sessionView.render()
+
+  router = new SessionRouter()
+
+  Backbone.history.start()

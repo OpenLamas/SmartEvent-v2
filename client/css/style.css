@@ -1,0 +1,119 @@
+@media (min-width: 980px)
+{
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+  #btn-home-search {
+    margin-left:15px;
+  }
+}  
+
+@media (max-width: 979px)
+{
+  #btn-home-search {
+    margin-left:0px;
+    margin-top:10px;
+  }
+}   
+
+.sidebar-nav {
+  padding: 9px 0;
+}
+
+#home-search {
+  margin-left:0px;
+}
+
+
+
+/* Correction des checkboxs inline dans les table-condensed*/
+.table-condensed td .checkbox {
+  margin-top:-8px;
+}
+/* Placement du bouton close-hero-unit en haut à droite */
+.hero-unit #close-hero-unit {
+  margin-top:-45px;
+  margin-right:-35px;
+}
+/* Création des tags de filtrage */
+.listTags{
+  display: inline-block;
+  height: 29px;
+  padding: 5px 0px 0px 5px;
+  background-color: white;
+  border: 1px solid #CCC;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -ms-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+  transition: border linear 0.2s, box-shadow linear 0.2s;
+}
+.tag{
+  display: inline-block;
+  height: 18px;
+  padding: 2px 5px;
+  border: 1px solid #CCC;
+  font-weight: bolder;
+  color: #0073EA;
+  margin-right: 5px;
+}
+
+.tag i{
+  margin-top: 1px;
+}
+
+.listTags input{
+  border: none;
+  width: 300px;
+  margin: 0;
+  margin-top: -2px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -ms-transition: none;
+  -o-transition: none;
+  transition: none;
+}
+
+.brand i {
+  vertical-align: 1px;
+}
+
+#selectSession button i{
+  margin-right: 5px;
+}
+
+#selectSession button{
+  margin-right: 5px;
+}
+
+#selectSession select{
+  margin-right: 5px;
+}
+
+.redText {
+  color: red;
+}
+
+.greenText {
+  color: green;
+}
+
+.table-search {
+  width: 600px;
+}
+
+#btngroupe-listevents {
+  margin-bottom: 20px;
+}

@@ -3,8 +3,9 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  jQuery(function() {
-    window.Event = (function(_super) {
+  JQuery(function() {
+    var Event, Session, SessionRouteur, SessionView, router;
+    Event = (function(_super) {
 
       __extends(Event, _super);
 
@@ -12,54 +13,82 @@
         return Event.__super__.constructor.apply(this, arguments);
       }
 
-      Event.prototype.defaults = {
-        _id: "000000000000000000000001",
-        dateDebut: "2012-02-10T08:00:00.000Z",
-        dateFin: "2012-02-10T08:44:23.372Z",
-        description: "Defaults",
-        emplacement: "No where",
-        nom: "Name"
-      };
-
       Event.prototype.initialize = function() {
-        console.log('Event Contructor');
-        return this.bind("error", function(model, error) {
-          return console.log("Erreur ! : " + error);
-        });
-      };
-
-      Event.prototype.getId = function() {
-        return this.get('id');
-      };
-
-      Event.prototype.validate = function(attributes) {
-        if (attributes.name === '') {
-          return "Le nom n'est pas valide";
-        }
+        this.url = "/api/event/" + this.id;
+        return console.log("Nouvel event !");
       };
 
       return Event;
 
     })(Backbone.Model);
-    return window.Events = (function(_super) {
+    Session = (function(_super) {
 
-      __extends(Events, _super);
+      __extends(Session, _super);
 
-      function Events() {
-        return Events.__super__.constructor.apply(this, arguments);
+      function Session() {
+        return Session.__super__.constructor.apply(this, arguments);
       }
 
-      Events.prototype.model = Event;
+      Session.prototype.model = Event;
 
-      Events.prototype.url = "/api/events/";
+      Session.prototype.url = "/api/events";
 
-      Events.prototype.initialize = function() {
-        return console.log("Nouvelle Collection");
+      Session.prototype.initialize = function() {
+        return console.log("Nouvelle session !");
       };
 
-      return Events;
+      return Session;
 
     })(Backbone.Collection);
+    SessionView = (function(_super) {
+
+      __extends(SessionView, _super);
+
+      function SessionView() {
+        return SessionView.__super__.constructor.apply(this, arguments);
+      }
+
+      SessionView.prototype.el = $('#session');
+
+      SessionView.prototype.initialize = function() {
+        this.template = _.template($("#template-events").html());
+        _.bindAll(this, 'render');
+        return this.model.bind('change', render);
+      };
+
+      SessionView.prototype.render = function() {
+        var renderedCont;
+        renderedCont = this.template(this.model.toJSON());
+        $(this.el).html(renderedCont);
+        return this;
+      };
+
+      return SessionView;
+
+    })(Backbone.View);
+    SessionRouteur = (function(_super) {
+
+      __extends(SessionRouteur, _super);
+
+      function SessionRouteur() {
+        return SessionRouteur.__super__.constructor.apply(this, arguments);
+      }
+
+      SessionRouteur.prototype.initialize = function() {
+        var session;
+        session = new Session();
+        this.session.fetch();
+        this.sessionView = new SessionView({
+          collection: session
+        });
+        return this.sessionView.render();
+      };
+
+      return SessionRouteur;
+
+    })(Backbone.Router);
+    router = new SessionRouter();
+    return Backbone.history.start();
   });
 
 }).call(this);
