@@ -1,5 +1,17 @@
 /* ~~~ Partie Event ~~~ */
 
+/**
+*  Module
+*/
+
+var redis = require('redis'),
+    clientRed = redis.createClient(6379, "10.0.0.80"),
+    fs = require('fs');
+
+clientRed.on("error", function (err){
+  console.log("Error : " + err);
+});
+
 exports.view = function(req, res){
   clientRed.hgetall("event:"+req.params.id, function (err, reply){
     if(!err){
@@ -11,25 +23,40 @@ exports.view = function(req, res){
       res.send(500);
     }
   });
-});
+};
 
 exports.modif =  function(req, res){
-  console.log("Request: modif event "+req.params.id);
-  clientRed.hmset("event:"+req.params.id, req.body, redis.print);
-  res.send(200);
-});
+  /*res.send(500);
+  fs.writeFile('./log.txt', req.body);*/
+  //console.log(req);
+
+  /** FIXME
+  *  req.body vide
+  *  n'arrive pas a récup les param envoyé par le client
+  */
+  clientRed.hmset("event:"+req.params.id, req.body, function (err){
+    if(!err){
+      console.log("Request: modif event "+req.params.id);
+      res.send(200);
+    }
+    else{
+      res.send(500);
+      console.log("(event.modif) | " + err);
+    }
+  });
+};
 
 exports.suppr = function (req, res){
   console.log("Request: del event "+req.params.id);
   clientRed.del("event:"+req.params.id, redis.print); // On supprime l'event
-  clientRed.srem("global:events", req.params.id, redis.print) // On l'enlève du set
+  clientRed.srem("global:events", req.params.id, redis.print); // On l'enlève du set
   res.send(200);
-});
+};
 
-exports.new = function(req, res){
+exports.nouv = function(req, res){
   clientRed.get("events:nextId", function (err, id){ // On récup l'id de notre nouvel event
     if(!err){
-      console.log("New event ! id:"+id); 
+      console.log("New event ! id:" + id);
       clientRed.incr("events:nextId", redis.print); // On incrémante pour le suivant
       clientRed.hmset("event:"+id, req.body, redis.print); // on crée le hash event:id
       clientRed.hset("event:"+id, "id", id, redis.print); // on ajoute l'id de l'event au hash
@@ -41,19 +68,19 @@ exports.new = function(req, res){
       res.send(500);
     }
   });
-});
+};
 
 exports.viewAll = function (req, res){
   clientRed.smembers("global:events", function (err, reply){
     console.log("Request : all events");
-    if(!err){ 
+    if(!err){
       var waiting = 0;
-      var listEvents = new Array();
+      var listEvents = [];
       for(var i=0; i<reply.length;i++){
         waiting ++;
-        clientRed.hgetall("event:"+reply[i], function (err, event){ 
+        clientRed.hgetall("event:"+reply[i], function (err, event){
           waiting --;
-          if(!err){ 
+          if(!err){
             listEvents.push(event);
             if(!waiting){
               res.send(listEvents);
@@ -71,4 +98,4 @@ exports.viewAll = function (req, res){
       res.send(500);
     }
   });
-});
+};
