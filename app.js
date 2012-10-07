@@ -5,8 +5,8 @@ var express = require('express'),
     application_root = __dirname,
     redis = require('redis');
 
-var app = express.createServer(),
-    clientRed = redis.createClient();
+var app = express(),
+  clientRed = redis.createClient();
 
 clientRed.on("error", function (err){
   console.log("Error : " + err);

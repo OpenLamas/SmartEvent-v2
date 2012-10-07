@@ -24,6 +24,9 @@ Set : user:4731:sessionCree 134 348
 Set : user:4731:sessionVisible 541 348 24 418
 Key : user:deschapy 4731
 
+Key : user:4731:token sd4687RQFfzqFE45ssef54QF
+Key : user:sd4687RQFfzqFE45ssef54QF:id 4731
+
 
 Sessions
 /api/sessions
