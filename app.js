@@ -7,11 +7,11 @@ var express = require('express'),
     events = require('./routes/events');
     //sessions = require('./routes/sessions')
 
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(application_root + '/client'));
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+app.use(app.router);
+app.use(express.static(application_root + '/client'));
+app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 
 app.get("/api/event/:id", events.view);
 app.put("/api/event/:id", events.modif);
