@@ -5,8 +5,14 @@
 */
 
 var redis = require('redis'),
-    clientRed = redis.createClient(6379, "10.0.0.80"),
-    fs = require('fs');
+    clientRed = redis.createClient(6379, "10.0.0.250");
+    //fs = require('fs');
+
+/** TODO
+*  emit un event lorsque la base est selectionné
+*  pour n'écouté les I/O qu'à ce moment
+*/
+clientRed.send_command("SELECT", [1], redis.print);
 
 clientRed.on("error", function (err){
   console.log("Error : " + err);
