@@ -67,7 +67,7 @@ exports.suppr = function (req, res){
 };
 
 exports.nouv = function(req, res){
-  clientRed.get("events:nextId", function (err, id){ // On récup l'id de notre nouvel event
+  clientRed.get("global:nextEventId", function (err, id){ // On récup l'id de notre nouvel event
     if(!err){
       console.log("New event ! id:" + id);
       clientRed.incr("events:nextId", redis.print); // On incrémante pour le suivant
