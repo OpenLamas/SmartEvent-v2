@@ -21,7 +21,14 @@ exports.view = function(req, res){
   clientRed.hgetall("session:"+req.params.id, function(err, reply){
     if(!err){
       console.log("Request: Session "+req.params.id);
-      res.send(reply);
+      if(reply === null){
+        console.log("Session doesn't exist");
+        res.send(404);
+      }
+
+      else{
+        res.send(reply);
+      }
     }
     else{
       console.log("Error: "+ err);

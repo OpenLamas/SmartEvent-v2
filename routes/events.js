@@ -22,7 +22,14 @@ exports.view = function(req, res){
   clientRed.hgetall("event:"+req.params.id, function (err, reply){
     if(!err){
       console.log("Request: Event "+req.params.id);
-      res.send(reply);
+      if(reply === null){
+        console.log("Event doesn't exist");
+        res.send(404);
+      }
+
+      else{
+        res.send(reply);
+      }
     }
     else{
       console.log("Error : "+ err);
