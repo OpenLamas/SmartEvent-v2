@@ -100,7 +100,7 @@ exports.viewAll = function (req, res){
       }
     }
     else{
-      console.log("Error : "+ id);
+      console.log("Error : "+ err);
       res.send(500);
     }
   });
