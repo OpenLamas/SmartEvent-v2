@@ -4,8 +4,8 @@
 var express = require('express'),
     app = express(),
     application_root = __dirname,
-    events = require('./routes/events');
-    //sessions = require('./routes/sessions')
+    events = require('./routes/events'),
+    sessions = require('./routes/sessions');
 
 app.use(express.bodyParser());
 app.use(express.methodOverride());
@@ -18,6 +18,12 @@ app.put("/api/event/:id", events.modif);
 app.delete("/api/event/:id", events.suppr);
 app.post("/api/events", events.nouv);
 app.get('/api/events', events.viewAll);
+
+app.get("/api/session/:id", sessions.view);
+app.put("/api/session/:id", sessions.modif);
+app.delete("/api/session/:id", sessions.suppr);
+app.post("/api/sessions", sessions.nouv);
+app.get("/api/sessions", sessions.viewAll);
 
 var port = process.env.PORT || 5000;
 app.listen(port, function() {
