@@ -28,6 +28,7 @@ exports.view = function(req, res){
       }
 
       else{
+        res.writeHead('Content-type: application/json', 200);
         res.send(reply);
       }
     }
@@ -70,7 +71,7 @@ exports.nouv = function(req, res){
   clientRed.get("global:nextEventId", function (err, id){ // On récup l'id de notre nouvel event
     if(!err){
       console.log("New event ! id:" + id);
-      clientRed.incr("events:nextId", redis.print); // On incrémante pour le suivant
+      clientRed.incr("global:nextEventId", redis.print); // On incrémante pour le suivant
       clientRed.hmset("event:"+id, req.body, redis.print); // on crée le hash event:id
       clientRed.hset("event:"+id, "id", id, redis.print); // on ajoute l'id de l'event au hash
       clientRed.sadd("global:events", id, redis.print); // on ajoute l'id au set
