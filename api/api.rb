@@ -13,6 +13,7 @@ module SmartEvent
       users    = db['users']
 
       version 'v1', :using => :path
+      prefix 'api'
       format :json
 
       resource :sessions do
