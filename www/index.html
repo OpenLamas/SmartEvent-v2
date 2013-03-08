@@ -1,11 +1,109 @@
-<!DOCTYPE html>
-<head>
-  <meta charset="utf-8">
-  <title>bTask</title>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-  <script type="text/javascript" src="js/lib/require.js"></script>
-  <script type="text/javascript" src="js/app.js"></script>
-</head>
-<body>
-</body>
+<!--
+Projet de 1ère année - IUT Annecy
+Julien Brun, Maxime Mouchet
+github.com/OpenLamas/SmartEvent
+-->
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>SmartEvent-v2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!--<link rel="stylesheet" type="text/css" href="css/fullcalendar.css">
+    <link rel="stylesheet" type="text/css" href="css/fullcalendar.print.css" media='print'>-->
+    <!-- HTML5 shim -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+      <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      </style>
+    <![endif]-->
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="img/favicon.ico">
+  </head>
+  <body>
+  <!-- Navbar -->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <!-- collapse pour la vue mobile -->
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <ul class="nav nav-collapse">
+            <li><a href="#"><i class="icon-home icon-white"></i> Vue globale</a></li>
+            <li><a href="#"><i class="icon-calendar icon-white"></i> Gestion des évènements</a></li>
+            <li class="dropdown" id="menuAdmin">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#menuAdmin"><i class="icon-list-alt icon-white"></i> Administration <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#"><i class="icon-user"></i> Utilisateurs</a></li>
+                <li><a href="#"><i class="icon-hdd"></i> Sauvegardes</a></li>
+                <li><a href="#"><i class="icon-wrench"></i> Configuration</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav pull-right nav-collapse">
+            <li class='dropdown'>
+              <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
+                Jean Cocteau
+                <b class='caret'></b>
+              </a>
+              <ul class='dropdown-menu'>
+                <li><a href="#"><i class="icon-off"></i> Déconnexion</a></li>
+              <ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <div class="container">
+    <div class="hero-unit">
+    <h1>Bienvenue,</h1>
+    <p>Actuellement vous êtes inscrit à 5 évènements.</p>
+  <br /><br />
+    <div class="well" id="search">
+      <form action="#" methode="post" class="form-inline span11" id="home-search">
+        <div class="control-group">
+          <input class="input-xxxlarge" type="text" placeholder="Réseaux, Wi-Fi, Informatique, RT1,..."><a href="#" id="btn-home-search" class="btn btn-primary btn-large">Rechercher des évènements &raquo;</a> 
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span6">
+      <h2>Sessions</h2>
+      <ul class="unstyled">
+        <li>
+          <span class="badge badge-success">3</span>
+          <a href="#">Films &raquo;</a></li>
+        <li>
+        <span class="badge badge-important">2</span>
+        <a href="#">Lectures &raquo;</a></li>
+      </ul>
+    </div>
+    <div class="span6">
+      <h2>Prochains évènements</h2>
+      <ul class="unstyled">
+        <li><a href="#">12 mai - Metropolis</a></li>
+        <li><a href="#">8 juin - Inception</a></li>
+        <li><a href="#">21 juin - Pro Git</a></li>
+        <li><a href="#">Voir tout &raquo;</a></li>
+      </ul>
+    </div>
+  </div> 
+  </div>
+  <p class='container' style='color: #A5A39E;margin-top: 10%;'>2012 - Julien Brun, <a style='text-decoration: none; color: #A5A39E;' href='http://www.maxmouchet.com'>Max Mouchet</a></p>
+  <script data-main="js/app" type="text/javascript" src="js/lib/require.js"></script>
+  </body>
 </html>
