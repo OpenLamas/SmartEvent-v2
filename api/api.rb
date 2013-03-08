@@ -3,7 +3,7 @@ require 'grape'
 module SmartEvent
     class API < Grape::API
 
-      version 'v1', :using => :header, :vendor => 'smartevent'
+      version 'v1', :using => :path
       format :json
 
       resource :sessions do
