@@ -1,4 +1,14 @@
 source 'https://rubygems.org'
 
-gem 'goliath'
 gem 'grape'
+gem 'mongo'
+
+group :development do
+  gem 'rake'
+end
+
+group :test do
+  gem 'rake'
+  gem 'rspec'
+  gem 'rack-test'
+end
