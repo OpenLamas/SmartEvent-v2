@@ -1,19 +1,14 @@
 {
-  "name": "SmartEvent-V2",
+  "name": "SmartEvent-v2",
   "version": "0.0.1",
+  "private": true,
   "dependencies": {
     "connect": "2.7.0"
   },
   "devDependencies": {
-    "mocha": "latest"
-  , "chai": "latest"
-  , "grunt": "latest"
-  , "grunt-exec": "latest"
+    "mocha": "latest",
+    "chai": "latest"
   },
-  "scripts": {
-    "grunt": "node_modules/.bin/grunt"
-  },
-  "private": true,
   "amd": {},
   "volo": {
     "baseUrl": "www/js/lib",

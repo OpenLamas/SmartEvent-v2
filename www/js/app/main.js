@@ -1,17 +1,9 @@
-define([], function (require) {
-    // Load any app-specific modules
-    // with a relative require call,
-    // like:
-    // var util = require('./util');
+define([], function() {
+  var App = function() {
+  };
 
-    var App = function(){
+  App.prototype = {
+  };
 
-    };
-
-    App.prototype = {
-
-    };
-
-    console.log('Hello world');
-    return App;
+  return App;
 });
