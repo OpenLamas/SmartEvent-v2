@@ -7,6 +7,7 @@ GEM
     async-rack (0.5.1)
       rack (~> 1.1)
     backports (2.6.7)
+    bson (1.8.3)
     builder (3.2.0)
     descendants_tracker (0.0.1)
     em-synchrony (1.0.3)
@@ -40,6 +41,8 @@ GEM
     http_parser.rb (0.5.3)
     i18n (0.6.4)
     log4r (1.1.10)
+    mongo (1.8.3)
+      bson (~> 1.8.3)
     multi_json (1.6.1)
     multi_xml (0.5.3)
     rack (1.5.2)
@@ -62,3 +65,4 @@ PLATFORMS
 DEPENDENCIES
   goliath
   grape
+  mongo

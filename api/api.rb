@@ -1,7 +1,16 @@
 require 'grape'
+require 'mongo'
 
 module SmartEvent
     class API < Grape::API
+      include Mongo
+
+      mongo = MongoClient.new('localhost', 27017)
+      db = mongo.db('testing')
+
+      sessions = db['sessions']
+      events   = db['events']
+      users    = db['users']
 
       version 'v1', :using => :path
       format :json
@@ -10,6 +19,7 @@ module SmartEvent
 
         desc 'Return all sessions.'
         get do
+          sessions.find
         end
 
         desc 'Return one session.'
@@ -17,6 +27,7 @@ module SmartEvent
           requires :id, :type => Integer, :desc => 'Session id.'
         end
         get ':id' do
+          sessions.find('_id' => params[:id])
         end
 
         desc 'Create a session.'
@@ -28,6 +39,8 @@ module SmartEvent
           requires :reminder,  :type => DateTime, :desc => 'Date for sending the reminder.'
         end
         post do
+          session = {'name' => params[:name], 'maxpeople' => params[:maxpeople], 'minevents' => params['minevents'], 'deadline' => params['deadline'], 'reminder' => params['reminder']}
+          sessions.insert(session)
         end
 
         desc 'Update a session.'
@@ -40,6 +53,8 @@ module SmartEvent
           requires :reminder,  :type => DateTime, :desc => 'Date for sending the reminder.'
         end
         put ':id' do
+          session = {'name' => params[:name], 'maxpeople' => params[:maxpeople], 'minevents' => params['minevents'], 'deadline' => params['deadline'], 'reminder' => params['reminder']}
+          session.update({'_id' => params[:id]}, session)
         end
 
         desc 'Delete a session.'
@@ -47,6 +62,7 @@ module SmartEvent
           requires :id, :type => Integer, :desc => 'Session id.'
         end
         delete ':id' do
+          sessions.remove('_id' => params[:id])
         end
 
       end
@@ -55,6 +71,7 @@ module SmartEvent
 
         desc 'Return all events.'
         get do
+          events.find
         end
 
         desc 'Return one event.'
@@ -62,6 +79,7 @@ module SmartEvent
           requires :id, :type => Integer, :desc => 'Event id.'
         end
         get ':id' do
+          events.find('_id' => params[:id])
         end
 
         desc 'Create an event.'
@@ -73,6 +91,8 @@ module SmartEvent
           requires :endtime,   :type => DateTime, :desc => 'End date of the event.'
         end
         post do
+          event = {'name' => params[:name], 'desc' => params[:desc], 'location' => params[:location], 'starttime' => params[:starttime], 'endtime' => params[:endtime]}
+          event.insert(event)
         end
 
         desc 'Update an event.'
@@ -85,6 +105,8 @@ module SmartEvent
           requires :endtime,   :type => DateTime, :desc => 'End date of the event.'
         end
         put ':id' do
+          event = {'name' => params[:name], 'desc' => params[:desc], 'location' => params[:location], 'starttime' => params[:starttime], 'endtime' => params[:endtime]}
+          events.update({'_id' => params[:id]}, event)
         end
 
         desc 'Delete an event.'
@@ -92,6 +114,7 @@ module SmartEvent
           requires :id, :type => Integer, :desc => 'Event id.'
         end
         delete ':id' do
+          events.remove('_id' => params[:id])
         end
 
       end
@@ -100,13 +123,15 @@ module SmartEvent
 
         desc 'Get all users.'
         get do
+          users.find
         end
 
         desc 'Get one user.'
         params do
-          requires :id, :type => Integer, :desc => 'User id.'
+          requires :id, :type => String, :desc => 'User id.'
         end
         get ':id' do
+          users.find('_id' => params[:id])
         end
 
         desc 'Create an user.'
@@ -117,6 +142,8 @@ module SmartEvent
           requires :role, :type => String, :desc => 'User role.'
         end
         post do
+          user = {'firstname' => params[:firstname], 'lastname' => params[:lastname], 'email' => params[:email], 'role' => params[:role]}
+          users.insert(user)
         end
 
         desc 'Update an user.'
@@ -128,6 +155,8 @@ module SmartEvent
           requires :role,  :type => String, :desc => 'User role.'
         end
         put ':id' do
+          user = {'firstname' => params[:firstname], 'lastname' => params[:lastname], 'email' => params[:email], 'role' => params[:role]}
+          users.update({'_id' => params[:id]}, user)
         end
 
         desc 'Delete an user.'
@@ -135,6 +164,7 @@ module SmartEvent
           requires :id, :type => Integer, :desc => 'User id.'
         end
         delete ':id' do
+          users.remove('_id' => params[:id])
         end
 
       end
