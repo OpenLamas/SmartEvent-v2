@@ -54,7 +54,7 @@ module SmartEvent
           requires :id, :type => Integer, :desc => 'Event id.'
         end
         delete ':id' do
-          events.remove('_id' => params[:id])
+          events.remove('_id' => BSON::ObjectId(params[:id]))
         end
 
       end

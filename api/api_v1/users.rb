@@ -52,7 +52,7 @@ module SmartEvent
           requires :id, :type => String, :desc => 'User id.'
         end
         delete ':id' do
-          users.remove('_id' => params[:id])
+          users.remove('_id' => BSON::ObjectId(params[:id]))
         end
 
       end
