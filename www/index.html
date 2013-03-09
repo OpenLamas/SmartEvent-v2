@@ -70,7 +70,7 @@ github.com/OpenLamas/SmartEvent
   <div class="container">
     <div class="hero-unit">
     <h1>Bienvenue,</h1>
-    <p>Actuellement vous êtes inscrit à 5 évènements.</p>
+    <p>Actuellement vous êtes inscrit à <span id="nombreEventsAvenir"></span> évènements.</p>
   <br /><br />
     <div class="well" id="search">
       <form action="#" methode="post" class="form-inline span11" id="home-search">
@@ -83,13 +83,7 @@ github.com/OpenLamas/SmartEvent
   <div class="row">
     <div class="span6">
       <h2>Sessions</h2>
-      <ul class="unstyled">
-        <li>
-          <span class="badge badge-success">3</span>
-          <a href="#">Films &raquo;</a></li>
-        <li>
-        <span class="badge badge-important">2</span>
-        <a href="#">Lectures &raquo;</a></li>
+      <ul id="sessionsEnCours"class="unstyled">
       </ul>
     </div>
     <div id="eventAvenirCont" class="span6">

@@ -1,4 +1,5 @@
 suite('Dep', function() {
+  var assert = should;
   test('jQuery doit être créé', function() {
     assert.ok($);
   });

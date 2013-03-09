@@ -7,7 +7,12 @@
   },
   "devDependencies": {
     "mocha": "latest",
-    "chai": "latest"
+    "chai": "latest",
+    "should": "latest"
+  },
+  "script": {
+    "test": "make test",
+    "build": "volo build"
   },
   "amd": {},
   "volo": {

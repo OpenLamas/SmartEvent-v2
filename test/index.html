@@ -9,12 +9,17 @@
 </head>
 <body>
   <div id="mocha"></div>
-  <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>-->
   <script src="/node_modules/chai/chai.js"></script>
   <script src="/node_modules/mocha/mocha.js"></script>
   <script src="/js/lib/require.js"></script>
   <script src="/js/app.js"></script>
-  <script src="/test/setup.js"></script>
+  <script>
+  var should = chai.assert;
+  mocha.setup({
+    ui: 'tdd'
+    , globals: ['smartEvent']
+  });
+  </script>
   <script src="/test/dep.test.js"></script>
   <script src="/test/app.test.js"></script>
   <script>require(['app/main'], function() { mocha.run(); });</script>
