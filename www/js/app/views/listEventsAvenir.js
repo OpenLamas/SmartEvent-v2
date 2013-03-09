@@ -11,11 +11,13 @@ function(EventView){
 
     initialize: function(){
       this.collection.on('add', this.render, this);
+      this.collection.on('remove', this.render, this);
     },
 
     render: function(){
       var self = this
         $el = $(this.el);
+      $el.html("");
       _.each(this.collection.first(3), function(event){ // On prend au maximum les trois premier event de la collection
         var item = new EventView({ model: event});
         $el.append(item.render().el);

@@ -27,6 +27,23 @@ function(ListEventsAvenir, ListSessionsEnCours, NombreEventsAvenir, Event, Event
     this.views.sessionsEnCours.render();
     this.views.nombreEventsAvenir = new NombreEventsAvenir({collection: this.collections.events});
     this.views.nombreEventsAvenir.render();
+
+    
+
+    /*var that = this;
+    setTimeout(function(){
+      that.models.session3 = new Session({id: "103", title: "Series", inscriptionMini: 2, inscriptionEffective: 1});
+      that.collections.sessions.add(that.models.session3);
+    }, 2500);
+
+    setTimeout(function(){
+      that.models.session3 = new Session({id: "103", title: "Series", inscriptionMini: 2, inscriptionEffective: 1});
+      that.collections.sessions.remove(that.collections.sessions.get("103"));
+    }, 5000);
+
+    setTimeout(function(){
+      that.collections.events.remove(that.collections.events.get("003"));
+    }, 7500);*/
   };
 
   App.prototype = {

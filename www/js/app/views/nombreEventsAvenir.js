@@ -11,6 +11,7 @@ function(EventView){
 
 		initialize: function(){
 			this.collection.on('add', this.render, this);
+			this.collection.on('remove', this.render, this);
 			console.log("New nombreEventsAvenir");
 		},
 
