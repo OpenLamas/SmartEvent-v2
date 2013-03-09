@@ -19,7 +19,7 @@ module SmartEvent
           requires :id, :type => String, :desc => 'User id.'
         end
         get ':id' do
-          users.find('_id' => params[:id])
+          users.find_one(:_id => BSON::ObjectId(params[:id]))
         end
 
         desc 'Create an user.'
@@ -36,7 +36,7 @@ module SmartEvent
 
         desc 'Update an user.'
         params do
-          requires :id, :type => Integer, :desc => 'User id.'
+          requires :id, :type => String, :desc => 'User id.'
           requires :firstname, :type => String, :desc => 'User firstname.'
           requires :lastname,  :type => String, :desc => 'User lastname.'
           requires :email, :type => String, :desc => 'User email.'
@@ -44,12 +44,12 @@ module SmartEvent
         end
         put ':id' do
           user = {'firstname' => params[:firstname], 'lastname' => params[:lastname], 'email' => params[:email], 'role' => params[:role]}
-          users.update({'_id' => params[:id]}, user)
+          users.update({'_id' => BSON::ObjectId(params[:id])}, user)
         end
 
         desc 'Delete an user.'
         params do
-          requires :id, :type => Integer, :desc => 'User id.'
+          requires :id, :type => String, :desc => 'User id.'
         end
         delete ':id' do
           users.remove('_id' => params[:id])
