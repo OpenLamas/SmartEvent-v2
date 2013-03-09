@@ -1,0 +1,6 @@
+script: "cd api && bundle exec rake"
+rvm:
+  - 2.0.0
+  - 1.9.3
+node_js:
+  - 0.8
