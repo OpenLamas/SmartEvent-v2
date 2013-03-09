@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/OpenLamas/SmartEvent-V2.png)](https://travis-ci.org/OpenLamas/SmartEvent-V2)
+
 This web project has the following setup:
 
 * www/ - the web assets for the project
