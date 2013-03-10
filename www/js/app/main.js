@@ -1,23 +1,19 @@
 define([
-	'app/views/listEventsAvenir',
-  'app/views/listSessionsEnCours',
-  'app/views/nombreEventsAvenir',
+  'app/views/home',
   'app/views/nomUser',
   'app/routes',
 
   /*DEBUG*/
+  'app/models/user',  
   'app/models/event',
   'app/collections/eventsAvenir',
   'app/models/session',
-  'app/collections/sessionsEnCours',
-  'app/models/user'
+  'app/collections/sessionsEnCours'
 ], 
 
-function(ListEventsAvenir, ListSessionsEnCours, NombreEventsAvenir, NomUser, Routes, Event, EventsAvenir, Session, SessionsEnCours, User) {
+function(Home, NomUser, Routes, User, Event, EventsAvenir, Session, SessionsEnCours) {
   var App = function() {
 
-    this.routes = new Routes(this);
-    Backbone.history.start();
     this.models.event1 = new Event({id: "001", title: "Metropolis", date: "12 Jan"});
     this.models.event2 = new Event({id: "002", title: "Inception", date: "16 Fev"});
     this.models.event3 = new Event({id: "003", title: "Pro Git", date: "21 Fev"});
@@ -28,14 +24,13 @@ function(ListEventsAvenir, ListSessionsEnCours, NombreEventsAvenir, NomUser, Rou
     this.collections.sessions = new SessionsEnCours().add([this.models.session1, this.models.session2]);
     this.models.user1 = new User({id: "201", nom: "Cocteau", prenom: "Jean"});
 
-  	this.views.eventsAvenir = new ListEventsAvenir({collection: this.collections.events});
-  	this.views.eventsAvenir.render();
-    this.views.sessionsEnCours = new ListSessionsEnCours({collection: this.collections.sessions});
-    this.views.sessionsEnCours.render();
-    this.views.nombreEventsAvenir = new NombreEventsAvenir({collection: this.collections.events});
-    this.views.nombreEventsAvenir.render();
+    this.views.home = new Home(this); //On instancie la vue Home et on lui passe le contexte courant
+
     this.views.nomUser = new NomUser({model: this.models.user1});
     this.views.nomUser.render();
+
+    this.routes = new Routes(this); //On instancie le Routeur et on lui passe le contexte courant
+    Backbone.history.start({pushState: true}); //On active le routage et le pushState (fake ajout dans l'historique, HTML5 )
 
     
 

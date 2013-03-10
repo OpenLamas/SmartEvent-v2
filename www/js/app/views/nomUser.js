@@ -11,7 +11,6 @@ function(template){
     },
 
     initialize: function(){
-      console.log(this);
       this.model.on('change', this.render, this);
       this.model.on('destroy', this.remove, this);
     },

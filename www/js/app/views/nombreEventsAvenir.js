@@ -1,26 +1,30 @@
 define([
-	'app/views/sessionEnCours'
+  'app/views/sessionEnCours'
 ],
 
 function(EventView){
-	var listEventsAvenirView = Backbone.View.extend({
-		el: '#nombreEventsAvenir',
-		events: {
+  var listEventsAvenirView = Backbone.View.extend({
+    events: {
 
-		},
+    },
 
-		initialize: function(){
-			this.collection.on('add', this.render, this);
-			this.collection.on('remove', this.render, this);
-			console.log("New nombreEventsAvenir");
-		},
+    initialize: function(){
+      this.collection.on('add', this.render, this);
+      this.collection.on('remove', this.render, this);
+      this.collection.on('nbEvents', this.render, this);
+    },
 
-		render: function(){
-			$el = $(this.el);
-			$el.html(this.collection.length);
-			return this;
-		}
-	});
+    render: function(){
+      this.setEl();
+      
+      $(this.el).html(this.collection.length);
+      return this;
+    },
 
-	return listEventsAvenirView
+    setEl: function(){
+      this.el = $('#nombreEventsAvenir');
+    }
+  });
+
+  return listEventsAvenirView
 });
