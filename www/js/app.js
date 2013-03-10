@@ -25,5 +25,5 @@ requirejs.config({
 require(['app/main'],
 
 function(App) {
-  window.smartEvent = new App();
+  var smartEvent = new App();
 });
