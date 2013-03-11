@@ -1,9 +1,9 @@
-require 'mongo'
 require 'grape'
 require 'grape-swagger'
 
 class API < Grape::API
 
+  version 'v1', :using => :path
   prefix 'api'
   format :json
 
@@ -18,50 +18,62 @@ class API < Grape::API
 
     desc 'Return all sessions.'
     get do
-      sessions.find
+      Session.all
     end
 
     desc 'Return one session.'
     params do
-      requires :id, :type => Integer, :desc => 'Session id.'
+      requires :id, :type => String, :desc => 'Session id.'
     end
     get ':id' do
-      sessions.find(:_id => BSON::ObjectId(params[:id]))
+      Session.first(:id => params[:id])
     end
 
     desc 'Create a session.'
     params do
-      requires :name, :type => String, :desc => 'Session name.'
-      requires :maxpeople, :type => Integer,  :desc => 'Maximum number of people per session.'
-      requires :minevents, :type => Integer,  :desc => 'Minimum of events inscription per people.'
-      requires :deadline,  :type => String, :desc => 'Deadline for inscriptions.'
-      requires :reminder,  :type => String, :desc => 'Date for sending the reminder.'
+      requires :name,      :type => String,  :desc => 'Session name.'
+      requires :maxpeople, :type => Integer, :desc => 'Maximum number of people per session.'
+      requires :minevents, :type => Integer, :desc => 'Minimum of events inscription per people.'
+      requires :deadline,  :type => String,  :desc => 'Deadline for inscriptions.'
+      requires :reminder,  :type => String,  :desc => 'Date for sending the reminder.'
     end
     post do
-      session = {'name' => params[:name], 'maxpeople' => params[:maxpeople], 'minevents' => params['minevents'], 'deadline' => params['deadline'], 'reminder' => params['reminder']}
-      sessions.insert(session)
+      session = Session.new(:name => params[:name],
+                            :maxpeople => params[:maxpeople],
+                            :minevents => params[:minevents],
+                            :deadline  => params[:deadline],
+                            :reminder  => params[:reminder])
+      session.save!
     end
 
     desc 'Update a session.'
     params do
-      requires :id, :type => Integer, :desc => 'Session id.'
-      requires :name, :type => String, :desc => 'Session name.'
-      requires :maxpeople, :type => Integer,  :desc => 'Maximum number of people per session.'
-      requires :minevents, :type => Integer,  :desc => 'Minimum of events inscription per people.'
-      requires :deadline,  :type => String, :desc => 'Deadline for inscriptions.'
-      requires :reminder,  :type => String, :desc => 'Date for sending the reminder.'
+      requires :id,        :type => String, :desc => 'Session id.'
+      requires :name,      :type => String,  :desc => 'Session name.'
+      requires :maxpeople, :type => Integer, :desc => 'Maximum number of people per session.'
+      requires :minevents, :type => Integer, :desc => 'Minimum of events inscription per people.'
+      requires :deadline,  :type => String,  :desc => 'Deadline for inscriptions.'
+      requires :reminder,  :type => String,  :desc => 'Date for sending the reminder.'
     end
     put ':id' do
-      session = {'name' => params[:name], 'maxpeople' => params[:maxpeople], 'minevents' => params['minevents'], 'deadline' => params['deadline'], 'reminder' => params['reminder']}
-      session.update({'_id' => BSON::ObjectId(params[:id])}, session)
+=begin
+      session = Session.first(:id => params[:id])
+      session.name      = params[:name]
+      session.maxpeople = params[:maxpeople]
+      session.minevents = params[:minevents]
+      session.deadline  = params[:deadline]
+      session.reminder  = params[:reminder]
+      session.save!
+=end
+      'Pas implemente :('
     end
 
     desc 'Delete a session.'
     params do
-      requires :id, :type => Integer, :desc => 'Session id.'
+      requires :id, :type => String, :desc => 'Session id.'
     end
     delete ':id' do
-      sessions.remove('_id' => BSON::ObjectId(params[:id]))
+      Session.first(:id => params[:id]).delete
     end
   end
 
@@ -70,50 +82,53 @@ class API < Grape::API
 
       desc 'Return all events.'
       get do
-        events.find
+        Event.all
       end
 
       desc 'Return one event.'
       params do
-        requires :id, :type => Integer, :desc => 'Event id.'
+        requires :id, :type => String, :desc => 'Event id.'
       end
       get ':id' do
-        events.find(:_id => BSON::ObjectId(params[:id]))
+        Event.find(:id => params[:id])
       end
 
       desc 'Create an event.'
       params do
-        requires :name, :type => String, :desc => 'Event name.'
-        requires :desc, :type => String, :desc => 'Event description.'
-        requires :location, :type => String, :desc => 'Location of the event.'
+        requires :name,      :type => String, :desc => 'Event name.'
+        requires :desc,      :type => String, :desc => 'Event description.'
+        requires :location,  :type => String, :desc => 'Location of the event.'
         requires :starttime, :type => String, :desc => 'Start date of the event.'
         requires :endtime,   :type => String, :desc => 'End date of the event.'
       end
       post do
-        event = {'name' => params[:name], 'desc' => params[:desc], 'location' => params[:location], 'starttime' => params[:starttime], 'endtime' => params[:endtime]}
-        event.insert(event)
+        event = Event.new(:name => params[:name],
+                          :desc => params[:desc],
+                          :location  => params[:location],
+                          :starttime => params[:starttime],
+                          :endtime   => params[:endtime])
+        event.save!
       end
 
       desc 'Update an event.'
       params do
-        requires :id, :type => Integer, :desc => 'Event id.'
-        requires :name, :type => String, :desc => 'Event name.'
-        requires :desc, :type => String, :desc => 'Event description.'
-        requires :location, :type => String, :desc => 'Location of the event.'
+        requires :id,        :type => String, :desc => 'Event id.'
+        requires :name,      :type => String, :desc => 'Event name.'
+        requires :desc,      :type => String, :desc => 'Event description.'
+        requires :location,  :type => String, :desc => 'Location of the event.'
         requires :starttime, :type => String, :desc => 'Start date of the event.'
         requires :endtime,   :type => String, :desc => 'End date of the event.'
       end
       put ':id' do
-        event = {'name' => params[:name], 'desc' => params[:desc], 'location' => params[:location], 'starttime' => params[:starttime], 'endtime' => params[:endtime]}
-        events.update({'_id' => BSON::ObjectId(params[:id])}, event)
+        'Pas implemente :('
       end
 
       desc 'Delete an event.'
       params do
-        requires :id, :type => Integer, :desc => 'Event id.'
+        requires :id, :type => String, :desc => 'Event id.'
       end
       delete ':id' do
-        events.remove('_id' => BSON::ObjectId(params[:id]))
+        Event.first(:id => params[:id]).delete
       end
     end
 
@@ -122,7 +137,7 @@ class API < Grape::API
 
     desc 'Get all users.'
     get do
-      users.find
+      User.all
     end
 
     desc 'Get one user.'
@@ -130,32 +145,34 @@ class API < Grape::API
       requires :id, :type => String, :desc => 'User id.'
     end
     get ':id' do
-      users.find_one(:_id => BSON::ObjectId(params[:id]))
+      User.first(:id => params[:id])
     end
 
     desc 'Create an user.'
     params do
       requires :firstname, :type => String, :desc => 'User firstname.'
       requires :lastname,  :type => String, :desc => 'User lastname.'
-      requires :email, :type => String, :desc => 'User email.'
-      requires :role, :type => String, :desc => 'User role.'
+      requires :email,     :type => String, :desc => 'User email.'
+      requires :role,      :type => String, :desc => 'User role.'
     end
     post do
-      user = {'firstname' => params[:firstname], 'lastname' => params[:lastname], 'email' => params[:email], 'role' => params[:role]}
-      users.insert(user)
+      user = User.new(:firstname => params[:firstname],
+                      :lastname  => params[:lastname],
+                      :email => params[:email],
+                      :role  => params[:role])
+      user.save!
     end
 
     desc 'Update an user.'
     params do
-      requires :id, :type => String, :desc => 'User id.'
+      requires :id,        :type => String, :desc => 'User id.'
       requires :firstname, :type => String, :desc => 'User firstname.'
       requires :lastname,  :type => String, :desc => 'User lastname.'
-      requires :email, :type => String, :desc => 'User email.'
-      requires :role,  :type => String, :desc => 'User role.'
+      requires :email,     :type => String, :desc => 'User email.'
+      requires :role,      :type => String, :desc => 'User role.'
     end
     put ':id' do
-      user = {'firstname' => params[:firstname], 'lastname' => params[:lastname], 'email' => params[:email], 'role' => params[:role]}
-      users.update({'_id' => BSON::ObjectId(params[:id])}, user)
+      'Pas implemente :('
     end
 
     desc 'Delete an user.'
@@ -163,7 +180,7 @@ class API < Grape::API
       requires :id, :type => String, :desc => 'User id.'
     end
     delete ':id' do
-      users.remove('_id' => BSON::ObjectId(params[:id]))
+      User.first(:id => params[:id]).delete
     end
   end
 
