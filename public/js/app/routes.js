@@ -36,10 +36,12 @@ define([
       },
 
       showSession: function(id){
+        console.log(this.App.views.session);
         if(this.App.collections.sessions && this.App.collections.sessions.length){
           var session = this.App.collections.sessions.get(id);
           if(session){
-            session.trigger("show");
+            this.App.views.session.render();
+            //session.trigger("show");
           }
         }
       }

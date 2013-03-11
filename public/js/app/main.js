@@ -1,5 +1,6 @@
 define([
   'app/views/home',
+  'app/views/session',
   'app/views/nomUser',
   'app/routes',
 
@@ -11,7 +12,7 @@ define([
   'app/collections/sessionsEnCours'
 ],
 
-function(Home, NomUser, Routes, User, Event, EventsAvenir, Session, SessionsEnCours) {
+function(Home, Session, NomUser, Routes, User, Event, EventsAvenir, Session, SessionsEnCours) {
   var App = function() {
 
     this.models.event1 = new Event({id: "001", title: "Metropolis", date: "12 Jan"});
@@ -25,6 +26,7 @@ function(Home, NomUser, Routes, User, Event, EventsAvenir, Session, SessionsEnCo
     this.models.user1 = new User({id: "201", nom: "Cocteau", prenom: "Jean"});
 
     this.views.home = new Home(this); //On instancie la vue Home et on lui passe le contexte courant
+    this.views.session = new Session(this); //On instancie la vue Session et on lui passe le contexte courant
 
     this.views.nomUser = new NomUser({model: this.models.user1});
     this.views.nomUser.render();
