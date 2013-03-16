@@ -11,13 +11,9 @@ function(EventView){
     initialize: function(){
       this.collection.on('add', this.render, this);
       this.collection.on('remove', this.render, this);
-      this.collection.on('listSessions:ok', this.render, this);
-      this.collection.on('listSessions:fail', this.renderFail, this);
     },
 
     render: function(){
-      this.setEl();
-      
       var $el = $(this.el);
       $el.html("");
       
@@ -26,16 +22,6 @@ function(EventView){
         $el.append(item.render().el);
       });
       return this;
-    },
-
-    renderFail: function(){
-      this.setEl();
-      $(this.el).html("Aucune session en cours");
-      return this;
-    },
-
-    setEl: function(){
-      this.el = $('#sessionsEnCours');
     }
   });
 

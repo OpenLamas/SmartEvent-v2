@@ -8,7 +8,6 @@ define([
 
 function(ListEventsAvenir, ListSessionsEnCours, NombreEventsAvenir, template){
   var HomeView = Backbone.View.extend({
-    el: 'header',
     template: _.template(template),
 
     events: {
@@ -18,14 +17,16 @@ function(ListEventsAvenir, ListSessionsEnCours, NombreEventsAvenir, template){
     initialize: function(App){
       this.App = App;
 
-      /* On instancie les vues enfants de HomeView */
-      this.App.views.eventsAvenir = new ListEventsAvenir({collection: this.App.collections.events});
-      this.App.views.sessionsEnCours = new ListSessionsEnCours({collection: this.App.collections.sessions});
-      this.App.views.nombreEventsAvenir = new NombreEventsAvenir({collection: this.App.collections.events});
+      this.eventsAvenir = new ListEventsAvenir({collection: this.App.collections.events});
+      this.sessionsEnCours = new ListSessionsEnCours({collection: this.App.collections.sessions});
+      this.nombreEventsAvenir = new NombreEventsAvenir({collection: this.App.collections.events});
     },
 
     render: function(){
-      $(this.el).after(this.template()); //On rend home
+      $(this.el).html(this.template()); //On rend home
+      $('#eventAvenir', this.el).html(this.eventsAvenir.render().el);
+      $('#sessionsEnCours', this.el).html(this.sessionsEnCours.render().el);
+      $('#nombreEventsAvenir', this.el).html(this.nombreEventsAvenir.render().el);
       return this;
     }
   });

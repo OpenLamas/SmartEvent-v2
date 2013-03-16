@@ -15,14 +15,9 @@ function(EventView){
     },
 
     render: function(){
-      this.setEl();
       
       $(this.el).html(this.collection.length);
       return this;
-    },
-
-    setEl: function(){
-      this.el = $('#nombreEventsAvenir');
     }
   });
 

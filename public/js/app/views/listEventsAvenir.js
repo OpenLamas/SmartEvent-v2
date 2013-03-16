@@ -4,6 +4,7 @@ define([
 
 function(EventView){
   var listEventsAvenirView = Backbone.View.extend({
+    tagName: ul,
     events: {
 
     },
@@ -16,7 +17,6 @@ function(EventView){
     },
 
     render: function(){
-      this.setEl();
       var $el = $(this.el);
 
       $el.html("");
@@ -26,16 +26,6 @@ function(EventView){
       });
       $el.append('<li><a href="#">Voir tout &raquo;</a></li>'); //On ajoute le lien à la fin de la liste
       return this;
-    },
-
-    renderFail: function(){
-      this.setEl();
-
-      $(this.el).html("Aucun évènement à venir");
-    },
-
-    setEl: function(){
-      this.el = $('#eventAvenir');
     }
   });
 

@@ -1,7 +1,4 @@
 define([
-  'app/views/home',
-  'app/views/session',
-  'app/views/nomUser',
   'app/routes',
 
   /*DEBUG*/
@@ -25,18 +22,12 @@ function(Home, Session, NomUser, Routes, User, Event, EventsAvenir, Session, Ses
     this.collections.sessions = new SessionsEnCours().add([this.models.session1, this.models.session2]);
     this.models.user1 = new User({id: "201", nom: "Cocteau", prenom: "Jean"});
 
-    this.views.home = new Home(this); //On instancie la vue Home et on lui passe le contexte courant
-    this.views.session = new Session(this); //On instancie la vue Session et on lui passe le contexte courant
-
-    this.views.nomUser = new NomUser({model: this.models.user1});
-    this.views.nomUser.render();
-
     this.routes = new Routes(this); //On instancie le Routeur et on lui passe le contexte courant
     Backbone.history.start({pushState: true}); //On active le routage et le pushState (fake ajout dans l'historique, HTML5 )
 
 
 
-    var that = this;
+    /*var that = this;
     setTimeout(function(){
       that.models.session3 = new Session({id: "103", title: "Series", inscriptionMini: 2, inscriptionEffective: 1});
       that.collections.sessions.add(that.models.session3);
@@ -49,7 +40,7 @@ function(Home, Session, NomUser, Routes, User, Event, EventsAvenir, Session, Ses
 
     setTimeout(function(){
       that.collections.events.remove(that.collections.events.get("003"));
-    }, 7500);
+    }, 7500);*/
   };
 
   App.prototype = {
