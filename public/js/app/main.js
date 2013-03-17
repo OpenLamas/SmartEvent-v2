@@ -9,7 +9,7 @@ define([
   'app/collections/sessionsEnCours'
 ],
 
-function(Home, Session, NomUser, Routes, User, Event, EventsAvenir, Session, SessionsEnCours) {
+function(Routes, User, Event, EventsAvenir, Session, SessionsEnCours) {
   var App = function() {
 
     this.models.event1 = new Event({id: "001", title: "Metropolis", date: "12 Jan"});
@@ -27,7 +27,7 @@ function(Home, Session, NomUser, Routes, User, Event, EventsAvenir, Session, Ses
 
 
 
-    /*var that = this;
+    var that = this;
     setTimeout(function(){
       that.models.session3 = new Session({id: "103", title: "Series", inscriptionMini: 2, inscriptionEffective: 1});
       that.collections.sessions.add(that.models.session3);
@@ -40,7 +40,7 @@ function(Home, Session, NomUser, Routes, User, Event, EventsAvenir, Session, Ses
 
     setTimeout(function(){
       that.collections.events.remove(that.collections.events.get("003"));
-    }, 7500);*/
+    }, 7500);
   };
 
   App.prototype = {

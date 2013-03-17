@@ -4,7 +4,6 @@ define([
 
 function(EventView){
   var listEventsAvenirView = Backbone.View.extend({
-    tagName: ul,
     events: {
 
     },

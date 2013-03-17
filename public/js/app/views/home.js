@@ -26,7 +26,7 @@ function(ListEventsAvenir, ListSessionsEnCours, NombreEventsAvenir, template){
       $(this.el).html(this.template()); //On rend home
       $('#eventAvenir', this.el).html(this.eventsAvenir.render().el);
       $('#sessionsEnCours', this.el).html(this.sessionsEnCours.render().el);
-      $('#nombreEventsAvenir', this.el).html(this.nombreEventsAvenir.render().el);
+      $('.hero-unit h1', this.el).after(this.nombreEventsAvenir.render().el);
       return this;
     }
   });

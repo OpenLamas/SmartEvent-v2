@@ -1,9 +1,12 @@
 define([
-  'app/views/sessionEnCours'
+  'app/views/sessionEnCours',
+  'text!app/templates/nombreEventsAvenir.html'
 ],
 
-function(EventView){
-  var listEventsAvenirView = Backbone.View.extend({
+function(EventView, template){
+  var nombreEventsAvenir = Backbone.View.extend({
+    el: 'p',
+    template: _.template(template),
     events: {
 
     },
@@ -15,11 +18,10 @@ function(EventView){
     },
 
     render: function(){
-      
-      $(this.el).html(this.collection.length);
+      $(this.el).html(this.template({nbEvents: this.collection.length}));
       return this;
     }
   });
 
-  return listEventsAvenirView
+  return nombreEventsAvenir;
 });

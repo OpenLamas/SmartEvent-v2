@@ -12,7 +12,7 @@ define([
       initialize: function(App){
         console.log("Router !");
         this.App = App;
-        this.layoutView = new LayoutView({model: this.App.user});
+        this.layoutView = new LayoutView({model: this.App.models.user1});
         this.layoutView.render();
         $('#main').html(this.layoutView.el);
       },
@@ -34,9 +34,9 @@ define([
           var session = this.App.collections.sessions.get(id);
           if(session){
             this.App.views.session.render();
-            //session.trigger("show");*/
+            //session.trigger("show");
           }
-        }
+        }*/
       }
     });
   });

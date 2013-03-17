@@ -1,10 +1,8 @@
 define([
-  'text!app/templates/layout.html',
-
-  'app/views/nomUser.js'
+  'text!app/templates/layout.html'
 ],
 
-function(template, ViewNomUser){
+function(template){
   var LayoutView = Backbone.View.extend({
     template: _.template(template),
 
